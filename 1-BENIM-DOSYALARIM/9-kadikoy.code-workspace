@@ -1,0 +1,35 @@
+{
+  "folders": [
+    {
+      "name": "ExampleFrontend",
+      "path": "ExampleFrontend"
+    },
+    {
+      "name": "ExampleBackend",
+      "path": "ExampleBackend"
+    },
+    {
+      "name": "Docs",
+      "path": "docs"
+    },
+    {
+      "name": "KADIKOY-AGENTS",
+      "path": "KADIKOY-AGENTS"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true,
+      "**/target": true,
+      "**/.angular": true,
+      "**/dist": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "angular.ng-template",
+      "vscjava.vscode-java-pack",
+      "ms-azuretools.vscode-docker"
+    ]
+  }
+}

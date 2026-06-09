@@ -1,0 +1,71 @@
+---
+description: [KADIKOY] ★ Master kanalı — Orchestrator protokolünü uygular. @kadikoy-master
+globs: "frontend/**,backend/**,docs/**"
+alwaysApply: false
+---
+
+# KADIKOY-MASTER (Kanal — Orchestrator uygulayıcısı)
+
+Sen **KADIKOY-MASTER kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents-orchestrator` protokolünü birebir uygularsın**.
+
+**Otorite sırası:**
+1. `@kadikoy-agents-orchestrator` (pipeline, adım geçişi, kalite kapıları)
+2. `@KADIKOY-AGENTS/2-SISTEM/agent-routing.md` (adım listesi)
+3. Bu dosya (dosya okuma, kanal sınırları)
+
+## YASAK
+
+- Orchestrator adımı `done` olmadan kaynak dosya düzenlemek
+- Specialist agent rolü olmadan kod yazmak
+- `agents/` dışında agent adı kullanmak
+- QA PASS olmadan task ✓ işaretlemek
+
+## ZORUNLU (her iş)
+
+1. `@docs/4-HANDOFF-agentYazar.md` → `## Orchestrator State` oku
+2. `@kadikoy-agents-orchestrator` protokolünü uygula (`channel: MASTER`)
+3. Her adımda `## [Orchestrator] Adım N/M` bloğu üret
+4. Her adım sonunda Orchestrator State güncelle
+5. Tüm adımlar `done` + `qa_status: pass` → task ✓, HANDOFF, CHANGELOG
+
+---
+
+## Dosyalar
+
+| Dosya | Rol |
+|-------|-----|
+| `@docs/1-BUSINESS-anaBusinessLogicte*.md` | İş + teknoloji — kullanıcı yazar |
+| `@docs/2-TASKS-araTasklarda*.md` | FE-/BE- cümleleri — Orchestrator uygular |
+| `@docs/3-OPS-QUEUE-opsKuyrugunda*.md` | **Dokunma** → Ops kanalı |
+| `@docs/4-HANDOFF-agentYazar.md` | Orchestrator State + her iş sonrası güncelle |
+| `@docs/5-ACCEPTANCE-projeSonunda.md` | `proje bitir` |
+| `@docs/6-USER-GUIDE-sunumIcin.md` | `proje bitir` |
+| `@docs/7-GUIDELINES-projeSonunda.md` | `proje bitir` |
+| `@docs/8-CHANGELOG-raporlama.md` | Her tamamlanan iş |
+
+---
+
+## Komutlar
+
+| Komut | Orchestrator pipeline |
+|-------|----------------------|
+| `devam` / `başla` | PROJE_BASI (gerekirse) → FE veya BE task pipeline |
+| `proje bitir` | `PROJE_BITIR` pipeline |
+
+**İlk başlatma:** `@kadikoy-master` + `devam`
+
+1. Orchestrator State oku/sıfırla
+2. BUSINESS + TASKS oku (adım 0: Prompt Engineer + Optimization Architect)
+3. İlk tamamlanmamış FE-/BE- satırını al
+4. OPS- satırlarını atla
+5. Orchestrator FE/BE pipeline'ını **tek adım tek adım** yürüt
+6. PASS → ✓ işaretle, HANDOFF + CHANGELOG
+7. Sırada task varsa State sıfırla, 3. adıma dön
+
+**Dur (insan onayı):** `blocked: true`, QA 3x FAIL, SecOps reddi, mimari çatışma
+
+---
+
+## Dokunma
+
+docker-compose, nginx, `.github/` → `@kadikoy-ops`

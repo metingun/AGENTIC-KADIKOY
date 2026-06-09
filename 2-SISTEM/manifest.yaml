@@ -1,0 +1,52 @@
+team: KADIKOY-AGENTS
+version: "1.7"
+
+user_files_dir: 1-BENIM-DOSYALARIM
+user_marker: "*"  # dosya adı sonunda — siz düzenler/çalıştırırsınız
+
+agent_routing: 2-SISTEM/agent-routing.md
+orchestrator:
+  rule: kadikoy-agents-orchestrator
+  state_file: 4-HANDOFF-agentYazar.md
+  state_section: "## Orchestrator State"
+  enforcement: strict  # adım atlanamaz; state güncellenmeden ilerlenemez
+
+files:
+  - { order: 0, file: 0-OKU-buradanBasla*.md, role: user_read, copy_to_docs: false }
+  - { order: 1, file: 1-BUSINESS-anaBusinessLogicte*.md, role: user, contains: [business, technology] }
+  - { order: 2, file: 2-TASKS-araTasklarda*.md, role: user, prefix: [FE-, BE-] }
+  - { order: 3, file: 3-OPS-QUEUE-opsKuyrugunda*.md, role: user, prefix: [OPS-] }
+  - { order: 4, file: 4-HANDOFF-agentYazar.md, role: agent }
+  - { order: 5, file: 5-ACCEPTANCE-projeSonunda.md, role: agent, trigger: proje_bitir }
+  - { order: 6, file: 6-USER-GUIDE-sunumIcin.md, role: agent, trigger: proje_bitir }
+  - { order: 7, file: 7-GUIDELINES-projeSonunda.md, role: agent, trigger: proje_bitir }
+  - { order: 8, file: 8-CHANGELOG-raporlama.md, role: agent }
+  - { order: 9, file: 9-kadikoy.code-workspace, role: setup, copy_to_docs: false }
+
+user_scripts:
+  - setup-one-time*.sh
+
+removed_optional: [CONSTRAINTS-ilkKurulumda, REQUIREMENTS-buyukModulde]
+
+channels:
+  master:
+    rule: kadikoy-master
+    orchestrator: kadikoy-agents-orchestrator
+    handles: [FE-, BE-]
+    role: executor  # pipeline yönetmez; orchestrator protokolünü uygular
+  ops:
+    rule: kadikoy-ops
+    orchestrator: kadikoy-agents-orchestrator
+    handles: [OPS-]
+    queue: 3-OPS-QUEUE-opsKuyrugunda*.md
+    role: executor
+
+global_hooks:
+  - kadikoy-prompt-engineer
+  - kadikoy-autonomous-optimization-architect
+
+pipelines:
+  fe: [ui-designer, ux-architect, frontend-developer, code-reviewer, minimal-change-engineer, api-tester, evidence-collector, senior-secops-engineer]
+  be: [product-manager, software-architect, backend-architect, database-optimizer, data-engineer, code-reviewer, minimal-change-engineer, api-tester, senior-secops-engineer]
+  ops: [devops-automator, senior-secops-engineer, database-optimizer, data-engineer, api-tester, reality-checker]
+  proje_bitir: [reality-checker, api-tester, evidence-collector, technical-writer, executive-summary-generator]
