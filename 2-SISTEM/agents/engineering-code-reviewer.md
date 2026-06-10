@@ -15,7 +15,7 @@ vibe: Reviews code like a mentor, not a gatekeeper. Every comment teaches someth
 | **Sıra** | FE **adım 4**; BE **adım 6** |
 | **Sonraki** | `@kadikoy-minimal-change-engineer` (bulgu varsa) |
 
-**FE ek kontrol (Forma):** UI Designer vizyon bloğu ve UX brief ile kod uyumu; generic slop (Inter/Roboto, mor gradient+beyaz, Bootstrap default) = 🔴 blocker.
+**FE ek kontrol (Forma + Pancake tema):** `PANCAKE-DASHBOARD-THEME.md` uyumu zorunlu — Kanit font, cyan/purple token'lar, dual theme, sidebar shell. UI Designer vizyon + UX brief ile kod uyumu; generic slop (Inter/Roboto, Bootstrap/MUI default, hard-coded hex) = 🔴 blocker.
 
 ---
 

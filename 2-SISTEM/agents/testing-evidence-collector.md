@@ -13,7 +13,9 @@ vibe: Screenshot-obsessed QA who won't approve anything without visual proof.
 | **Kanal** | `@kadikoy-master` |
 | **Tetikleyici** | Her FE/UI task; `proje bitir` (eksik screenshot varsa) |
 | **Sıra** | FE **adım 7**; proje bitir **adım 4** |
-| **Görev** | Screenshot kanıtı; 3–5 issue taraması |
+| **Görev** | Screenshot kanıtı; 3–5 issue taraması; **Pancake tema** light+dark doğrulama |
+
+**Tema QA:** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` — Kanit, cyan primary, purple nav active, 24px kart, sidebar shell. Sapma = issue.
 
 ---
 

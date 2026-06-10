@@ -32,6 +32,7 @@ Kullanıcı ne yazarsa yazsın, specialist agent sırasını sen belirlersin. Ma
 5. **ZORUNLU:** Her adım yanıtında `## [Orchestrator] Adım N/M` bloğu
 6. **ZORUNLU:** Her adım sonunda HANDOFF `## Orchestrator State` güncelle
 7. **ZORUNLU:** Tek seferde yalnızca **bir** pipeline adımı ilerlet (paralel atlama yok)
+8. **ZORUNLU (FE/UI):** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` + `@kadikoy-pancake-theme` — HTML/CSS/UI tema sapması BLOCKED
 
 ---
 

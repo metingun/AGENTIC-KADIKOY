@@ -14,10 +14,13 @@
 | **7** | `7-GUIDELINES-projeSonunda.md` | Agent — teknik özet |
 | **8** | `8-CHANGELOG-raporlama.md` | Agent — raporlama |
 | **9** | `9-kadikoy.code-workspace` | Kurulumda proje köküne kopyalanır |
+| **—** | `PANCAKE-DASHBOARD-THEME.md` | **Zorunlu FE tema** — tüm HTML/CSS/UI |
 
 Kaldırılan (gereksiz): `CONSTRAINTS`, `REQUIREMENTS` — teknoloji `1-BUSINESS*` cümlelerinde.
 
-Kurulum: `./KADIKOY-AGENTS/setup-one-time*.sh` — **bir kez**
+Kurulum (bir kez):
+- **Cursor:** `./KADIKOY-AGENTS/setup-one-time*.sh`
+- **VS Code + Copilot:** `./KADIKOY-AGENTS/setup-one-time-copilot*.sh`
 
 ---
 
@@ -58,6 +61,7 @@ Detaylı matris: `KADIKOY-AGENTS/2-SISTEM/agent-routing.md`
 |-------|-------|
 | Ops | `@kadikoy-ops` → `devam` (başlat; sonra otomatik) |
 | Master | `@kadikoy-master` → `devam` (başlat; sonra otomatik) |
+| FE tema | `@kadikoy-pancake-theme` — tüm HTML/CSS/UI **Pancake Dashboard** |
 | Sorun / blok | Agent durur — onay veya cevap verin |
 | Push | Ops → `push yap` |
 | Sunum hazırlık | Master → `proje bitir` |

@@ -1,0 +1,80 @@
+---
+description: [KADIKOY] ★ Zorunlu FE tema — tüm HTML/CSS/UI Pancake Dashboard. @kadikoy-pancake-theme
+globs: "**/*.{css,scss,sass,html,tsx,jsx,vue,component.html,component.scss,component.css}"
+alwaysApply: false
+---
+
+# KADIKOY — PANCAKE DASHBOARD TEMA (ZORUNLU)
+
+## Otorite
+
+**Tek kaynak:** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md`
+
+Tüm projelerde HTML, CSS, SCSS ve UI bileşenleri **yalnızca bu temaya göre** yazılır. Alternatif tema, generic Material/Bootstrap skin veya bağımsız renk/font seçimi **YASAK** — kullanıcı açıkça override etmedikçe.
+
+**Otorite sırası:**
+1. `PANCAKE-DASHBOARD-THEME.md`
+2. `@kadikoy-pancake-theme` (bu dosya)
+3. UI Designer / UX Architect / Frontend Developer agent kuralları
+
+---
+
+## Kim uyar (asla atlanmaz)
+
+| Agent | Rol |
+|-------|-----|
+| UI Designer | Estetik vizyon = Pancake token'ları |
+| UX Architect | Layout/shell/component spec = tema §4–§8 |
+| Frontend Developer | Production kod = tema birebir |
+| Code Reviewer | Tema sapması = FAIL |
+| Evidence Collector | Light + dark screenshot kanıtı |
+
+---
+
+## Zorunlu tema özeti (detay için MD dosyasını oku)
+
+| Alan | Değer |
+|------|-------|
+| Font | **Kanit** (Google Fonts) |
+| Primary | `--primary: #1FC7D4` (cyan) |
+| Secondary | `--secondary: #7645D9` (purple) |
+| Tema modu | Light + Dark — `[data-theme="light\|dark"]` |
+| App shell | Sidebar + topbar; mobil off-canvas |
+| Kart | 24px radius, ince border, pattern overlay |
+| Form | Uppercase micro-label, focus cyan glow |
+| Renk kullanımı | **Sadece CSS custom properties** — hard-coded hex yasak |
+
+---
+
+## Kodlamadan önce (Frontend Developer)
+
+1. `PANCAKE-DASHBOARD-THEME.md` dosyasını oku (design tokens, component sınıfları, shell HTML)
+2. Proje köküne veya global stile tema token'larını kopyala / `@import` et
+3. `<head>` FOUC script + Kanit font linkini ekle (tema §2)
+4. Angular Material kullanılıyorsa: Material renkleri tema token'larına map et — default indigo/pink yasak
+
+---
+
+## QA — tema uyumu (FAIL sebepleri)
+
+- ❌ Arial, Roboto, Inter, system-ui (Kanit dışı font)
+- ❌ Bootstrap / MUI default palette
+- ❌ Hard-coded hex (token dışı renk)
+- ❌ `border-radius: 4px` kartlarda (tema: 24px / `--radius-card`)
+- ❌ Tema switch / dark mode yok
+- ❌ Sidebar+topbar dashboard yerine düz sayfa (admin panel işlerinde)
+- ❌ FOUC — tema flash'ı
+
+---
+
+## Angular / React notu
+
+- **Angular:** global `styles.scss` → tema token'ları; component SCSS → `var(--primary)` vb.
+- **React/Vue:** aynı token seti; CSS modules veya global `:root` / `[data-theme]`
+- Chart/kütüphane renkleri: `--primary`, `--secondary`, `--success`, `--error` token'larından türet
+
+---
+
+## Override
+
+Kullanıcı **açıkça** farklı tema isterse (BUSINESS veya chat'te): o task için override belgelenir; varsayılan her zaman Pancake Dashboard.

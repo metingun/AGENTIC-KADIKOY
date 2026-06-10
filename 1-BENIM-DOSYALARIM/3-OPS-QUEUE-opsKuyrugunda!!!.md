@@ -6,8 +6,9 @@
 ---
 
 ## Yapılacaklar
-
-<!-- tüm OPS maddeleri tamamlandı (push manuel) -->
+- Docker üzerinden notification ve order servisleri kaldır.
+- Projeleri docker üzerinde çalıştırıp bana erişim verebilir misin?
+<!-- Scrum Assistant altyapı OPS taskları tamamlandı -->
 
 ---
 

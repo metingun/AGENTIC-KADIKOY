@@ -3,7 +3,11 @@
 > **`*` son eki** = sizin dosyanız (düzenle veya çalıştır). Yıldızsız = agent yazar.
 
 ```bash
+# Cursor
 ./KADIKOY-AGENTS/setup-one-time*.sh
+
+# VS Code + GitHub Copilot
+./KADIKOY-AGENTS/setup-one-time-copilot*.sh
 ```
 
 ## `1-BENIM-DOSYALARIM/` sırası
@@ -22,6 +26,8 @@
 | 9 | `9-kadikoy.code-workspace` | Kurulum |
 
 Cursor: `@kadikoy-ops` | `@kadikoy-master` → `devam` (bir kez; sorun yoksa otomatik devam)
+
+Copilot: `kadikoy.code-workspace` aç → prompt şablonları `COPILOT-PROMPTS.md`
 
 **v1.7:** `@kadikoy-agents-orchestrator` gerçek yönetici — Master/Ops protokol uygulayıcısı. State: HANDOFF `## Orchestrator State`. Matris: `2-SISTEM/agent-routing.md`
 

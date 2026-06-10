@@ -1,0 +1,32 @@
+{
+  "id": "2452933",
+  "key": "KAD-7315",
+  "summary": "ICTREQ-29690 Themis uzerinden gecis oncesine ait Sirius disi ses kayitlarinin talep edilmesi--SECURITY",
+  "url": "https://jira.turkcell.com.tr/rest/api/2/issue/2452933",
+  "status": {
+    "name": "To Do",
+    "category": "To Do",
+    "color": "default"
+  },
+  "issue_type": {
+    "name": "Story"
+  },
+  "priority": {
+    "name": "None"
+  },
+  "assignee": {
+    "display_name": "METIN GUN",
+    "name": "TCMEGUN",
+    "email": "metin.gun@turkcell.com.tr",
+    "key": "JIRAUSER172925"
+  },
+  "reporter": {
+    "display_name": "AYSEGUL GURKOK",
+    "name": "TCAGURKOK",
+    "email": "aysegul.gurkok@turkcell.com.tr",
+    "key": "tcagurkok"
+  },
+  "created": "2026-05-05T11:07:09.000+0300",
+  "updated": "2026-06-05T14:14:24.000+0300",
+  "description": null
+}

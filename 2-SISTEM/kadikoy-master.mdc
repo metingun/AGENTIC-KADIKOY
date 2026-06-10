@@ -30,10 +30,17 @@ Sen **KADIKOY-MASTER kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents
 
 ---
 
+## FE tema (ZORUNLU — tüm projeler)
+
+HTML/CSS/UI işlerinde **`@kadikoy-pancake-theme`** + `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` **asla atlanmaz**. FE pipeline başlamadan tema dosyası okunur; sapma QA FAIL.
+
+---
+
 ## Dosyalar
 
 | Dosya | Rol |
 |-------|-----|
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` | **Zorunlu FE tema** — HTML/CSS/UI |
 | `@docs/1-BUSINESS-anaBusinessLogicte*.md` | İş + teknoloji — kullanıcı yazar |
 | `@docs/2-TASKS-araTasklarda*.md` | FE-/BE- cümleleri — Orchestrator uygular |
 | `@docs/3-OPS-QUEUE-opsKuyrugunda*.md` | **Dokunma** → Ops kanalı |

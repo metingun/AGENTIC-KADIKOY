@@ -57,6 +57,8 @@ mkdir -p "$RULES_SRC" "$RULES_DEST"
 
 cp "$SISTEM_DIR/kadikoy-master.mdc" "$RULES_SRC/kadikoy-master.mdc"
 cp "$SISTEM_DIR/kadikoy-ops.mdc" "$RULES_SRC/kadikoy-ops.mdc"
+cp "$SISTEM_DIR/kadikoy-pancake-theme.mdc" "$RULES_SRC/kadikoy-pancake-theme.mdc"
+cp "$SISTEM_DIR/kadikoy-git-response.mdc" "$RULES_SRC/kadikoy-git-response.mdc" 2>/dev/null || true
 cp "$SISTEM_DIR/agent-routing.md" "$RULES_DEST/agent-routing.md"
 
 count=0
@@ -75,8 +77,10 @@ done < <(find "$AGENTS_DIR" -maxdepth 1 -name "*.md" -print0 | sort -z)
 
 cp "$RULES_SRC/kadikoy-master.mdc" "$RULES_DEST/"
 cp "$RULES_SRC/kadikoy-ops.mdc" "$RULES_DEST/"
+cp "$RULES_SRC/kadikoy-pancake-theme.mdc" "$RULES_DEST/"
+cp "$RULES_SRC/kadikoy-git-response.mdc" "$RULES_DEST/" 2>/dev/null || true
 
-ok "22 Cursor rule + agent-routing.md → $RULES_DEST"
+ok "24 Cursor rule + agent-routing.md → $RULES_DEST"
 echo ""
 echo "v1.7 — Orchestrator strict mode (adım state HANDOFF'ta; atlanamaz)"
 echo "Ops:    @kadikoy-ops   → devam (bir kez; sorun yoksa otomatik devam)"

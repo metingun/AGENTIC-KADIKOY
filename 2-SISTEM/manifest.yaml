@@ -25,6 +25,7 @@ files:
 
 user_scripts:
   - setup-one-time*.sh
+  - setup-one-time-copilot*.sh
 
 removed_optional: [CONSTRAINTS-ilkKurulumda, REQUIREMENTS-buyukModulde]
 

@@ -1,0 +1,42 @@
+---
+description: [KADIKOY] Git response çek — metingun/response repo JSON export. @kadikoy-git-response
+globs: "KADIKOY-AGENTS/**"
+alwaysApply: false
+---
+
+# KADIKOY-GIT-RESPONSE
+
+## Tetikleyici
+
+| Komut | Yap |
+|-------|-----|
+| `git response çek` | Aşağıdaki döngüyü çalıştır |
+| `@kadikoy-git-response` | Aynı |
+
+## Döngü (her seferinde)
+
+1. `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/10-GIT-RESPONSE-gitResponseCek*.md` oku
+2. Script çalıştır:
+   ```bash
+   bash KADIKOY-AGENTS/2-SISTEM/scripts/git-response-pull.sh
+   ```
+3. `KADIKOY-AGENTS/1-BENIM-DOSYALARIM/response-json.txt` oku
+4. Kullanıcıya JSON özetini ver (key, summary, status, assignee)
+5. Tam JSON `response-json.txt` dosyasında — chat'e gereksiz tekrar etme
+
+## Kaynak
+
+- Repo: `https://github.com/metingun/response` (branch: `main`)
+- Dosya: `response.txt`
+- JSON: `--- HAM SONUC ---` bloğu
+
+## Hata
+
+- `git pull` / clone fail → ağ veya repo erişimini bildir
+- JSON yok → `response.txt` formatını kontrol et
+- Script yoksa manuel: pull → parse → `response-json.txt` yaz
+
+## Dokunma
+
+- FE/BE/OPS task dosyalarına dokunma
+- Sadece `response-json.txt` ve cache güncellenir

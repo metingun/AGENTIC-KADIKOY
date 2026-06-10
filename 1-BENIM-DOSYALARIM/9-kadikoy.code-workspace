@@ -1,12 +1,12 @@
 {
   "folders": [
     {
-      "name": "ExampleFrontend",
-      "path": "ExampleFrontend"
+      "name": "ScrumAssistantFrontend",
+      "path": "ScrumAssistantFrontend"
     },
     {
-      "name": "ExampleBackend",
-      "path": "ExampleBackend"
+      "name": "ScrumAssistantBackend",
+      "path": "ScrumAssistantBackend"
     },
     {
       "name": "Docs",
@@ -18,6 +18,10 @@
     }
   ],
   "settings": {
+    "chat.useAgentsMdFile": true,
+    "chat.useNestedAgentsMdFiles": true,
+    "chat.includeApplyingInstructions": true,
+    "chat.includeReferencedInstructions": true,
     "files.exclude": {
       "**/node_modules": true,
       "**/target": true,
@@ -27,9 +31,12 @@
   },
   "extensions": {
     "recommendations": [
+      "github.copilot",
+      "github.copilot-chat",
       "angular.ng-template",
       "vscjava.vscode-java-pack",
-      "ms-azuretools.vscode-docker"
+      "ms-azuretools.vscode-docker",
+      "redhat.vscode-yaml"
     ]
   }
 }

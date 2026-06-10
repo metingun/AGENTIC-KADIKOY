@@ -32,12 +32,14 @@
 
 Kullanıcı ne derse desin, **FE-** veya UI içeren her task bu sırayı izler.
 
+> **Zorunlu tema:** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` + `@kadikoy-pancake-theme` — tüm HTML/CSS/UI bu temaya göre. Override yalnızca kullanıcı açıkça isterse.
+
 > **Forma estetik DNA** (`ux-developer.md` birleştirildi): UI Designer = vizyon, UX Architect = mimari brief, Frontend Developer = kod. Generic "AI slop" yasak.
 
 | Adım | Agent | Görev | Atlama |
 |:---:|-------|-------|--------|
-| 0 | Prompt Engineer + Optimization Architect | Task brief hazırla | Asla |
-| 1 | **UI Designer** | Estetik Vizyon bloğu (🎯🎨🔤✨), tipografi, renk, dual tema | Asla |
+| 0 | Prompt Engineer + Optimization Architect | Task brief hazırla; **Pancake tema MD oku** | Asla |
+| 1 | **UI Designer** | Estetik Vizyon = **Pancake Dashboard** token'ları (🎯🎨🔤✨) | Asla |
 | 2 | **UX Architect** | CSS/component mimarisi, animasyon spec, UX Implementasyon Brief | Asla |
 | 3 | **Frontend Developer** | Vizyon + brief'e sadık production kod (Angular/React/CSS) | Asla |
 | 4 | **Code Reviewer** | Doğruluk, güvenlik, performans incelemesi | Asla |
