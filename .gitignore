@@ -1,3 +1,17 @@
 # install-cursor.sh tarafından üretilir
 2-SISTEM/cursor-rules/
 cursor-rules/
+.cursor/rules/kadikoy/
+
+# install-copilot.sh tarafından üretilir
+.github/copilot-instructions.md
+.github/instructions/
+.vscode/settings.json
+.vscode/extensions.json
+AGENTS.md
+
+# init-docs.sh tarafından üretilir
+docs/
+
+# setup-one-time-*.sh tarafından kopyalanır
+kadikoy.code-workspace

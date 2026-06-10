@@ -55,10 +55,11 @@ Sen **KADIKOY-OPS kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents-or
 1. Orchestrator State oku/sıfırla
 2. BUSINESS + OPS-QUEUE oku (adım 0: Prompt Engineer + Optimization Architect)
 3. İlk tamamlanmamış OPS satırını al
-4. Orchestrator OPS pipeline'ını **tek adım tek adım** yürüt
+4. Orchestrator OPS pipeline'ını yürüt — **adımlar arası kullanıcı onayı BEKLEME**
 5. PASS → ✓ işaretle, HANDOFF + CHANGELOG
-6. Sırada OPS varsa State sıfırla, 3. adıma dön
+6. Sırada OPS varsa State sıfırla, 3. adıma **otomatik dön**
+7. Tüm OPS task'lar bitti → kullanıcıya bildir ve dur
 
-**Dur:** `blocked: true`, QA 3x FAIL, SecOps/deploy reddi
+**Sadece şunda dur:** `blocked: true` | QA 3x FAIL | SecOps/deploy reddi | sprint bitti
 
 `proje bitir` sonrası: `5-ACCEPTANCE` altyapı maddelerini Reality Checker adımıyla doğrula.

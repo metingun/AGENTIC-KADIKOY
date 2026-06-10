@@ -31,8 +31,24 @@ Kullanıcı ne yazarsa yazsın, specialist agent sırasını sen belirlersin. Ma
 4. **YASAK:** QA PASS olmadan task satırını ✓ işaretlemek
 5. **ZORUNLU:** Her adım yanıtında `## [Orchestrator] Adım N/M` bloğu
 6. **ZORUNLU:** Her adım sonunda HANDOFF `## Orchestrator State` güncelle
-7. **ZORUNLU:** Tek seferde yalnızca **bir** pipeline adımı ilerlet (paralel atlama yok)
+7. **ZORUNLU:** Adımları sırayla yürüt — bir adım biter bitmez sonrakine geç (paralel atlama yok)
 8. **ZORUNLU (FE/UI):** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` + `@kadikoy-pancake-theme` — HTML/CSS/UI tema sapması BLOCKED
+
+## 🚀 OTOMATİK DEVAM — KESİNLİKLE UYGULANACAK
+
+**Kullanıcı onayı BEKLEME.** Bir adım `done` olduğunda sonraki adıma otomatik geç.
+Pipeline içindeki her adım arasında kullanıcıya "devam" veya onay sormak **YASAK**.
+Tüm task tamamlanana, tüm task'lar bitene veya `BLOCKED` durumuna girene kadar dur.
+
+**Sadece şu durumlarda dur ve kullanıcıya bildir:**
+- `blocked: true` (QA 3x FAIL, SecOps reddi, mimari çatışma, belirsiz gereksinim)
+- Tüm pipeline adımları `done` + `qa_status: pass` → task ✓ tamamlandı
+- Kuyrukta hiç task kalmadı → sprint bitti
+
+**Adım geçişi formatı (devam mesajı yok — sessizce ilerle):**
+```
+## [Orchestrator] Adım N/M tamamlandı → Adım N+1/M başlıyor
+```
 
 ---
 
@@ -177,6 +193,7 @@ Adım 5: yalnızca adım 4 bulgu verirse veya QA FAIL. Adım 6: API yoksa `skipp
 2. Çıktıyı Orchestrator State `steps[n].output` alanına özetle
 3. `status: done` yap, `step_current` artır
 4. QA adımları FAIL → `retry` artır (max 3), fix adımına dön
+5. **Adım biter bitmez kullanıcı onayı BEKLEME → sonraki adıma otomatik geç**
 
 ---
 
@@ -225,11 +242,15 @@ Adım 5: yalnızca adım 4 bulgu verirse veya QA FAIL. Adım 6: API yoksa `skipp
 
 1. `@kadikoy-agents-orchestrator` protokolünü oku ve uygula
 2. HANDOFF Orchestrator State'i oku veya sıfırla
-3. Pipeline seç → adım 0'dan tek tek ilerle
-4. Tüm zorunlu adımlar `done` + QA `pass` → task ✓ + CHANGELOG + HANDOFF final
-5. Sonraki task varsa State sıfırla, devam et
+3. Pipeline seç → adım 0'dan başla
+4. Her adım biter bitmez — **kullanıcı onayı bekleme** — sonraki adıma geç
+5. Tüm zorunlu adımlar `done` + QA `pass` → task ✓ + CHANGELOG + HANDOFF final
+6. Sonraki task varsa State sıfırla, **otomatik devam et**
+7. Kuyrukta task kalmadığında kullanıcıya bildir ve dur
 
 **Master/Ops kod yazmaz** — yalnızca Orchestrator adımlarını specialist rule'lar üzerinden yürütür.
+
+**Dur sadece:** `blocked: true` | QA 3x FAIL | SecOps reddi | mimari çatışma | sprint bitti
 
 ---
 

@@ -65,11 +65,12 @@ HTML/CSS/UI işlerinde **`@kadikoy-pancake-theme`** + `@KADIKOY-AGENTS/1-BENIM-D
 2. BUSINESS + TASKS oku (adım 0: Prompt Engineer + Optimization Architect)
 3. İlk tamamlanmamış FE-/BE- satırını al
 4. OPS- satırlarını atla
-5. Orchestrator FE/BE pipeline'ını **tek adım tek adım** yürüt
+5. Orchestrator FE/BE pipeline'ını yürüt — **adımlar arası kullanıcı onayı BEKLEME**
 6. PASS → ✓ işaretle, HANDOFF + CHANGELOG
-7. Sırada task varsa State sıfırla, 3. adıma dön
+7. Sırada task varsa State sıfırla, 3. adıma **otomatik dön**
+8. Tüm task'lar bitti → kullanıcıya bildir ve dur
 
-**Dur (insan onayı):** `blocked: true`, QA 3x FAIL, SecOps reddi, mimari çatışma
+**Sadece şunda dur:** `blocked: true` | QA 3x FAIL | SecOps reddi | mimari çatışma | sprint bitti
 
 ---
 
