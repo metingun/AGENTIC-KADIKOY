@@ -1,63 +1,37 @@
-# SCRUM-ASSISTANT — Yapılacaklar
+# THEMIS PROJELERİ — Yapılacaklar
 
-> Her satır bir iş. Önek: `FE-` `BE-` `OPS-`
-> Agent `@docs/2-TASKS-araTasklarda*.md`
+> Her satır bir iş. **Önek zorunlu** → agent hangi projeye gideceğini önek'ten anlar.
+>
+> | Önek | Proje | Kanal |
+> |------|-------|-------|
+> | `FE-` | Themis-Fe (AngularJS 1.8) | `@kadikoy-master` |
+> | `BE-TCELL-` | Themis-TCELL (Java 7 / Spring 4 XML) | `@kadikoy-master` |
+> | `BE-TLEGAL-` | TLegal (Java 7 / Spring 3 XML / Oracle) | `@kadikoy-master` |
+> | `OPS-` | Docker, CI, altyapı | `3-OPS-QUEUE` → `@kadikoy-ops` |
 
 ---
 
 ## Yapılacaklar (üstten alta)
 
-### ALTYAPI (OPS — @kadikoy-ops)
-- [x] OPS- docker-compose'dan order-service-1, notification-service-1 kaldır; 8080-8081 portlarını boşalt
-- [x] OPS- docker-compose'a scrum-assistant-service (8080), scrum-support-service (8081), scrum-ai-service (8082) ekle; nginx upstream'lerini güncelle; Kafka topic scrum.app.logs.v1 oluştur
-
-### BACKEND — PROJE İSKELETİ
-- [x] BE-01: 3 Spring Boot projesi + common modülü scaffold et: Maven multi-module (scrum-parent → common, scrum-assistant-service:8080, scrum-support-service:8081, scrum-ai-service:8082); temel pom.xml bağımlılıkları
-- [x] BE-02: common modülde `GenericApiResponse<T>` record, `GlobalExceptionHandler` (@RestControllerAdvice, Türkçe mesajlar), SLF4J Logback JSON layout konfigürasyonu
-
-### BACKEND — AUTH & GÜVENLİK
-- [x] BE-03: MySQL şema: `users`, `roles`, `permissions`, `user_roles`, `role_permissions` tabloları; JPA entity'leri; `import.sql` seed (admin_user + customer_user, şifre: password); ddl-auto=update
-- [x] BE-04: Asimetrik RSA JWT: `JwtProvider` (RS256, 1 saat, username+roles claim), HttpOnly+Secure cookie transport, `JwtAuthenticationFilter`, `SecurityFilterChain` (stateless session)
-- [x] BE-05: `@RequiresPermission` custom annotation + `PermissionCacheService` (MySQL permissions → Caffeine cache, TTL 5dk) + AOP `@Around` interceptor; `POST /api/v1/auth/login`, `POST /api/v1/auth/logout`
-
-### BACKEND — VERİ KATMANI & FETCH
-- [x] BE-06: MongoDB: `SprintData` document (sprint.txt JSON yapısına göre), `BacklogItem` document (backlog.txt JSON yapısına göre); MongoRepository'ler; index tanımları
-- [x] BE-07: ScrumAssistantService: GitHub sprint.txt scheduled fetch (@Scheduled cron 5dk) → tekil `SprintData` upsert (MongoDB, mükerrer önle)
-- [x] BE-08: ScrumAssistantService: GitHub backlog.txt scheduled fetch → tekil `BacklogItem` upsert (MongoDB, mükerrer önle)
-
-### BACKEND — REST API
-- [x] BE-09: `GET /api/v1/backlog` (Pageable, filter: status/assignee/sprint, sort: createdAt desc) + `GET /api/v1/sprint` (Pageable)
-- [x] BE-10: `WebClient` bean (ScrumAssistantService → ScrumAIService, reactive, circuit breaker + timeout); ScrumAIService: `POST /api/v1/ai/analyze` (BacklogItem listesi → size tahmini + risk skoru + öneri, rule-based stub)
-
-### BACKEND — KAFKA LOG ALTYAPISI
-- [x] BE-11: Kafka log topic `scrum.app.logs.v1`: tüm servislerde `KafkaProducer` log appender (servis adı + level + timestamp + mesaj + requestId)
-- [x] BE-12: ScrumAssistantSupportService: Kafka consumer `scrum.app.logs.v1` → MongoDB `app_logs` collection; idempotency (messageId unique index)
-
-### FRONTEND — İSKELET & TEMA
-- [x] FE-01: Angular 21 scaffold: standalone components, routing, `withCredentials` HTTP interceptor, 401→/login interceptor, `AuthGuard`; pure CSS Pancake tema token sistemi (cyan #1FC7D4, purple #7645D9)
-
-### FRONTEND — AUTH EKRANLARI
-- [x] FE-02: Login ekranı: split-layout (sol form, sağ Aimm 3D karakter görseli — image2 light/image3 dark ilham); pancake tema; HttpOnly cookie auth; form validasyonu
-- [x] FE-03: Sign-Up ve Forgot Password ekranları: aynı split-layout + 3D karakter; form validasyonu; BE endpoint entegrasyonu
-
-### FRONTEND — ANA LAYOUT & EKRANLAR
-- [x] FE-04: Ana uygulama layout: collapsible sidebar (Active Backlog, Sprint), topbar (kullanıcı bilgisi, logout); router-outlet; pancake tema
-- [x] FE-05: Active Backlog ekranı: backend pagination tablo (search, filter by status/assignee, sort), satır tıklama → popup detay; kronolojik (en yeni üstte)
-- [x] FE-06: Active Backlog AI analiz: "AI ile Analiz Et" butonu → ScrumAIService POST → analiz sonuçları satır yanlarına pancake tema uyumlu overlay/scroll ile göster
-- [x] FE-07: Dashboard ekranı: sprint health skoru gauge (pure CSS, 1-100), planlanan vs gerçekleşen metrik kartları, velocity trend bar chart (pure CSS)
-
 ---
 
 ## Bitti
-
-*(Önceki ORDER-NOTIFICATION-SYSTEM sprint tamamlandı — tüm geçmiş task'lar docs/8-CHANGELOG'da)*
+- [x] BE-TCELL-002: CommunicationService.tlegalInkaWebServiceCall → @Autowired(required=false) + null guard in enrichScreenListWithSuperboxFlag; diğer brandlar için no-op davranış sağlandı
+- [x] FE-002: customer-card.html {{customerCardTitle || 'Müşteri Kartı'}} fallback doğrulandı — diğer brandlar için güvenli
+- [x] BE-TEST: TLegal ve Themis-TCELL yeni sınıfları için unit testler yazıldı + sonar bulguları düzeltildi
+- [x] BE-TLEGAL-001: TLegalInkaController + InkaProductQueryClient oluştur — PRODUCT_QUERY_SERVICE_WS (SOAP) üzerinden getProductDetailWithCustomerByMsisdn metodunu çağır; paymentType=76 ise superbox abonesi; request/response model'leri oluştur; Constants'a PRODUCT_QUERY_SERVICE_WS ve PRODUCT_QUERY_SERVICE_WS_TIMEOUT ekle
+- [x] BE-TCELL-001: CommunicationService.getEplInvoices (Themis-TCELL core) — isInCallList=1 olan unique msisdn'ler için TLegal InkaController'a REST isteği at; isSuperboxCustomer flag'ini EplInvoiceScreenDto'ya ekle; transaction yönetimini bozmadan yalnızca TCELL projesinde devreye gir
+- [x] FE-001: Themis-Fe turkcell brand customer_card_faturalar.html — Contract Statü ile Arama Listesinde kolonları arasına Superbox Abonesi kolonu ekle (ng-if="brand=='turkcell'"); isSuperboxCustomer=1 ise faturalar içinde herhangi biri varsa popup göster; customer-card.html'de Müşteri Kartı başlığını Müşteri Kartı (Superbox Abonesi) yap (ng-if="brand=='turkcell' && hasSuperboxCustomer")
+- [x] BE-TLEGAL-002: InkaProductQueryClient baştan yaz — productQuery JAR JAX-WS stublarını kullan (ProductQuery_Service/ProductQuery port); CustomerRelationWebServiceImpl pattern ile port lifecycle yönetimi; SecureWebService/SecureWsUtil ApiGW entegrasyonu; manuel HTTP/XML parsing kaldırıldı
+*(Önceki Scrum Assistant sprint task'ları 8-CHANGELOG'da kayıtlı)*
 
 ---
 
-## Önekler
+## Önek Referans
 
-| Önek | Sekme |
-|------|-------|
-| `FE-` | `@kadikoy-master` |
-| `BE-` | `@kadikoy-master` |
-| `OPS-` | `3-OPS-QUEUE-opsKuyrugunda*.md` → `@kadikoy-ops` |
+| Önek | Sekme | Stack hatırlatma |
+|------|-------|-----------------|
+| `FE-` | `@kadikoy-master` | AngularJS 1.8 / ES5 / Gulp / UX Rocket |
+| `BE-TCELL-` | `@kadikoy-master` | Java 7 / Spring 4.2 XML / Hibernate 4 / Maven multi-module |
+| `BE-TLEGAL-` | `@kadikoy-master` | Java 7 / Spring 3.0 XML / Hibernate 3.5 / Oracle 10g |
+| `OPS-` | `@kadikoy-ops` | Docker, CI/CD, nginx, altyapı |

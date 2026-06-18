@@ -1,6 +1,6 @@
 ---
 description: [KADIKOY] ★ Master kanalı — Orchestrator protokolünü uygular. @kadikoy-master
-globs: "frontend/**,backend/**,docs/**"
+globs: "**/*.java,**/*.js,**/*.html,**/*.scss,**/*.css,**/pom.xml,**/applicationContext*.xml,**/web.xml,**/gulpfile.js,**/bower.json,**/*.md"
 alwaysApply: false
 ---
 
@@ -10,7 +10,7 @@ Sen **KADIKOY-MASTER kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents
 
 **Otorite sırası:**
 1. `@kadikoy-agents-orchestrator` (pipeline, adım geçişi, kalite kapıları)
-2. `@KADIKOY-AGENTS/2-SISTEM/agent-routing.md` (adım listesi)
+2. `@KADIKOY-AGENTS/.cursor/rules/kadikoy/agent-routing.md` (adım listesi)
 3. Bu dosya (dosya okuma, kanal sınırları)
 
 ## YASAK
@@ -22,7 +22,7 @@ Sen **KADIKOY-MASTER kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents
 
 ## ZORUNLU (her iş)
 
-1. `@docs/4-HANDOFF-agentYazar.md` → `## Orchestrator State` oku
+1. `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/4-HANDOFF-agentYazar.md` → `## Orchestrator State` oku
 2. `@kadikoy-agents-orchestrator` protokolünü uygula (`channel: MASTER`)
 3. Her adımda `## [Orchestrator] Adım N/M` bloğu üret
 4. Her adım sonunda Orchestrator State güncelle
@@ -30,9 +30,11 @@ Sen **KADIKOY-MASTER kanalısın**. Pipeline yönetmezsin — **`@kadikoy-agents
 
 ---
 
-## FE tema (ZORUNLU — tüm projeler)
+## FE (ZORUNLU — Themis-Fe projesinde)
 
-HTML/CSS/UI işlerinde **`@kadikoy-pancake-theme`** + `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` **asla atlanmaz**. FE pipeline başlamadan tema dosyası okunur; sapma QA FAIL.
+Themis-Fe işlerinde `1-BUSINESS` → **KATMAN A** (Themis-Fe satırları) **asla atlanmaz**:
+AngularJS 1.8 / ES5 / Gulp / UX Rocket kısıtları doğrulanmadan kod yazılmaz.
+Pancake Dashboard teması Themis-Fe için geçersizdir — UX Rocket SCSS değişkenleri kullanılır.
 
 ---
 
@@ -40,15 +42,14 @@ HTML/CSS/UI işlerinde **`@kadikoy-pancake-theme`** + `@KADIKOY-AGENTS/1-BENIM-D
 
 | Dosya | Rol |
 |-------|-----|
-| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` | **Zorunlu FE tema** — HTML/CSS/UI |
-| `@docs/1-BUSINESS-anaBusinessLogicte*.md` | İş + teknoloji — kullanıcı yazar |
-| `@docs/2-TASKS-araTasklarda*.md` | FE-/BE- cümleleri — Orchestrator uygular |
-| `@docs/3-OPS-QUEUE-opsKuyrugunda*.md` | **Dokunma** → Ops kanalı |
-| `@docs/4-HANDOFF-agentYazar.md` | Orchestrator State + her iş sonrası güncelle |
-| `@docs/5-ACCEPTANCE-projeSonunda.md` | `proje bitir` |
-| `@docs/6-USER-GUIDE-sunumIcin.md` | `proje bitir` |
-| `@docs/7-GUIDELINES-projeSonunda.md` | `proje bitir` |
-| `@docs/8-CHANGELOG-raporlama.md` | Her tamamlanan iş |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/1-BUSINESS-anaBusinessLogicte*.md` | **KATMAN A** (proje kataloğu + stack kısıtları) + **KATMAN B** (aktif istek) — kullanıcı yazar |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/2-TASKS-araTasklarda*.md` | FE- / BE-TCELL- / BE-TLEGAL- / OPS- task'ları — Orchestrator uygular |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/3-OPS-QUEUE-opsKuyrugunda*.md` | **Dokunma** → Ops kanalı |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/4-HANDOFF-agentYazar.md` | Orchestrator State + her iş sonrası güncelle |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/5-ACCEPTANCE-projeSonunda.md` | `proje bitir` |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/6-USER-GUIDE-sunumIcin.md` | `proje bitir` |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/7-GUIDELINES-projeSonunda.md` | `proje bitir` |
+| `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/8-CHANGELOG-raporlama.md` | Her tamamlanan iş |
 
 ---
 
@@ -62,13 +63,14 @@ HTML/CSS/UI işlerinde **`@kadikoy-pancake-theme`** + `@KADIKOY-AGENTS/1-BENIM-D
 **İlk başlatma:** `@kadikoy-master` + `devam`
 
 1. Orchestrator State oku/sıfırla
-2. BUSINESS + TASKS oku (adım 0: Prompt Engineer + Optimization Architect)
-3. İlk tamamlanmamış FE-/BE- satırını al
-4. OPS- satırlarını atla
-5. Orchestrator FE/BE pipeline'ını yürüt — **adımlar arası kullanıcı onayı BEKLEME**
-6. PASS → ✓ işaretle, HANDOFF + CHANGELOG
-7. Sırada task varsa State sıfırla, 3. adıma **otomatik dön**
-8. Tüm task'lar bitti → kullanıcıya bildir ve dur
+2. **1-BUSINESS KATMAN A oku** → hedef proje(ler) + stack kısıtlarını bellek'e al
+3. **1-BUSINESS KATMAN B oku** → aktif geliştirme isteğini anla
+4. TASKS oku → ilk tamamlanmamış FE- / BE-TCELL- / BE-TLEGAL- satırını al
+5. OPS- satırlarını atla
+6. Task prefix'ine göre doğru proje + stack kısıtlarıyla pipeline'ı yürüt — **adımlar arası kullanıcı onayı BEKLEME**
+7. PASS → ✓ işaretle, HANDOFF + CHANGELOG
+8. Sırada task varsa State sıfırla, 4. adıma **otomatik dön**
+9. Tüm task'lar bitti → kullanıcıya bildir ve dur
 
 **Sadece şunda dur:** `blocked: true` | QA 3x FAIL | SecOps reddi | mimari çatışma | sprint bitti
 

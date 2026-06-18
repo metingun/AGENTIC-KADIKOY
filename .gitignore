@@ -1,7 +1,7 @@
 # install-cursor.sh tarafından üretilir
 2-SISTEM/cursor-rules/
 cursor-rules/
-.cursor/rules/kadikoy/
+.cursor
 
 # install-copilot.sh tarafından üretilir
 .github/copilot-instructions.md
@@ -15,3 +15,5 @@ docs/
 
 # setup-one-time-*.sh tarafından kopyalanır
 kadikoy.code-workspace
+
+.idea

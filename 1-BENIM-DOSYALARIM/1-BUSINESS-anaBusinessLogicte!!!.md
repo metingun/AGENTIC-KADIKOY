@@ -1,62 +1,125 @@
-# ORDER-NOTIFICATION-SYSTEM — İş mantığı + teknoloji (cümleleriniz)
+# THEMIS PROJELERİ — İş mantığı + teknoloji
 
-> Numara, epic yok. **Düz cümle** yazın.[cite: 1]
-> İş kuralları, teknoloji, kütüphane ve operasyon ihtiyaçlarının **hepsi burada veya TASKS'ta** olabilir.[cite: 1]
-> Agent `@docs/1-BUSINESS-anaBusinessLogicte*.md` okuyup anlar.[cite: 1]
-
----
-
-## Uygulama ne yapacak?
-- Yapay Zeka Destekli Akıllı Scrum/Kanban Asistanı ve Yönetim Paneli
-Hedef: Geleneksel Scrum/Kanban süreçlerindeki sprint planlama ve raporlama iş yükünü optimize ederek, takımların tamamen "kod geliştirmeye" ve "değer üretmeye" odaklanmasını sağlamak.
-1. Akıllı Planlama (Predictive Planning):
-Jira backlog'undan seçilen task’ları ve size’larını okuyabilmeli. (Jira üzerinde bir yazma işlemi yapılmamalıdır, sadece okuma.)
-Takımın geçmiş sprint verilerini (hız/velocity) analiz ederek, backlog’dan planlamaya dahil edilen yeni task’ların size’ları için objektif yapay zeka tahmini (Predictive Sizing) yapabilmeli.
-Bonus: Task’ların bloklanma nedenlerine AI desteği için çözümler önerebilmeli.
-2. Otomatik Görev Kırılımı ve Akıllı Atama (Task Decomposition):
-Planlamaya dahil edilen bir task’ı saniyeler içinde mantıklı teknik alt görevlere (Frontend, Backend, DB, Test vb.) bölmeli.
-Takım üyelerinin yetkinlik matrisine ve mevcut sprint yüklerine (kapasite) bakarak, görevleri en uygun kişilere akıllı eşleştirme ile en uygun atamayı önermeli.
-Oluşturulan bu alt görevleri ve atama önerilerini rapor olarak sunabilmeli.
-3. AI Sprint Review ve Yönetici Paneli (Dashboard):
-"Bu Sprint Ne Başardık?" odaklı otomatik bir demo raporu ve özet metni üretmeli.
-Planlanan vs. Gerçekleşen (Süre/Puan) sapma metriklerini görselleştiren bir dashboard sunmalı.
-Bonus: Gerçekleştirilemeyen task’lar için sprint’ler arası geçişkenlik (sonraki sprint’lere kalma durumu) metriği hesaplamalı.
-Bonus: Sprint için 1-100 skalasında sprint-health skoru hesaplamalı.
+> **`*` son eki** = sizin düzenleyeceğiniz dosya.
+> **KATMAN A** (Proje Kataloğu) dokunmayın — agent her seferinde okur.
+> **KATMAN B** (Aktif Geliştirme) → her yeni iş için **siz** güncellersiniz; agent buradan görevi alır.
+> Numara, epic yok. **Düz cümle veya maddeli liste** yazabilirsiniz.
 
 ---
 
-## Teknoloji ve stack (cümle olarak yazın)
-- dockerdan order-service-1 ve notification-service-1 kaldırılacak. Portlar boşa çıkacak.
-- Frontend angular 21 teknolojisi kullanılacak. Herhangi bir external library kullanılmayacak (angular material- bootstrap gibi). Pure css ve html ile md pancake temaya uygun olacak tüm ekranlar ve elementler.
-- Backend java 25 , spring boot 3 versiyonlarını kullanacak. MongoDB, MySQL ve Kafka connection olacak. 
-- 3 mikroservisli yapı istiyorum. 1-ScrumAssistantService, 2-ScrumAssistantSupportService, 3-ScrumAIService olarak 3 farklı servis olacak. 
-- 1. serviste tüm projemin yönlendirmeleri olacak. 2. ve 3. servise istek atabilecek. Orada webflux ile istekler atabilmeliyiz. Bu yapıyı kurmalısın.
-- Login role, claim yapısı bir custom annotation ile mysql den tablolardan cache yapılan veri üzerinden request permission izinleri anlaşılıp geçişe izin verilip verilmemesi sağlanacak.
-- 1. serviste tüm ana rest servisler olacak. 2. serviste kafka ile topiclerden consume yapılarak uygulama loglarını mongodb ye yazacak. Tüm uygulamalar loglarını bu topicte toplayacak. Servis ve mikroservis detayları logda yazmalıdır.
-- Gerekli tüm mongo mysql ve kafka elementlerini docker üzerinde oluşturmalıdır.
-- ScrumAssistantService içerisinde https://github.com/metingun/response/blob/main/sprint.txt dosyasını düzenli olarak son halini alıp mongodb de bir collection içine insert edecek. Oradaki json veri yapısını alacak. Tek tek datalar olacak şekilde görünecek tek json olarak görünmesin.
-- ScrumAssistantService içerisinde https://github.com/metingun/response/blob/main/backlog.txt dosyasını düzenli olarak son halini alıp mongodb de bir collection içine insert edecek. Oradaki json veri yapısını alacak. Tek tek datalar olacak şekilde görünecek tek json olarak görünmesin.
-- Login olunca bir dashboard ekranı açılacak. Bunun detaylarını daha sonra yaptıracağım.
-- Soldaki menüde Active Backlog seçeneği ile routing yapacak. o ekranda mongodb de backlog içerisinde bulunan tüm verileri tablo şeklinde temaya uygun search, filter vs. özellikleri ile beraber backend isteği ile pagination ile dolduracak. Tıklanınca popup ile detayları gösterilecek. AI ile Analiz et gibi bir buton olacak ve tıklanınca mevcutta listede bulunan taskların yanlarına analiz sonuçlarında çıkan değerleri popup şeklinde çıkarıp orada temaya uygun scroll ile gösterecek.
-- Yapılandırılmamış, esnek ve yüksek hacimli bildirim/audit loglarının saklanması ve hızlı indekslenmesi amacıyla MongoDB veritabanı tercih edilecektir.
-- Servisler arası asenkron olay tabanlı (Event-Driven) iletişim, mesajların kaybolmaması ve gevşek bağlı (loosely coupled) bir mimari için Apache Kafka message broker yapısı kurulacaktır.
-- İstemci isteklerinin tek bir noktadan güvenli yönlendirilmesi, CORS problemlerinin engellenmesi ve statik dosyaların sunumu için Nginx reverse proxy ve gateway katmanı olarak konumlandırılacaktır.
-- Tüm altyapı bileşenleri, veri tabanları ve mikroservisler local geliştirme ortamında izole, network bağımlılıkları çözülmüş şekilde Docker ve docker-compose mimarisiyle tek bir script ile ayağa kalkacaktır.
-- Kimlik doğrulama ve yetkilendirme işlemleri, güvenlik standartlarına uygun olarak asimetrik veya şifrelenmiş JWT token mimarisiyle, istemci tarafında XSS açıklarından korunmak amacıyla HttpOnly ve Secure işaretlenmiş Cookie'ler üzerinden taşınacaktır.
-- Kullanıcı kayıt olma (Sign-Up) veya şifre sıfırlama (Forgot Password) ekranları ve akışları bu projenin kapsamında yer almaktadır. Bunlar için de güzel bir ekran yapmalısın. images/image2 ve image3 ten ilham alarak temaya ters olmayacak şekilde ancak fotoğrafları da doğru şekilde kullanarak sign ve giriş ekranları oluşturulmalıdır.
+## KATMAN A — PROJE KATALOĞU (Kalıcı — Dokunmayın)
+
+> Bu bölüm tüm 3 projenin teknolojisini, mimari kurallarını ve kısıtlarını tanımlar.
+> Agent, herhangi bir FE / BE / OPS isteği almadan önce bu bölümü okuyarak
+> hangi proje, hangi stack, hangi kural geçerli olduğunu anlar.
 
 ---
 
-## İş kuralları
+### Proje 1 — Themis-Fe (AngularJS Frontend)
 
-- Kullanıcı sistemi kullanmadan önce mutlaka geçerli kimlik bilgileriyle doğrulanmalıdır; kimlik doğrulaması başarısız olan istekler HTTP 401 Unauthorized hatası almalı ve login ekranına yönlendirilmelidir.
-- Notification Service, Kafka'dan okuduğu her sipariş mesajını işlerken benzersiz sipariş ID'sini kontrol etmeli, mükerrer mesaj işleme (Idempotency) kuralına uymalı ve aynı sipariş için ikinci bir log üretmemelidir.
-- Bildirim kayıtları MongoDB'ye yazılırken statü alanı varsayılan olarak "PENDING" kaydedilmeli, simüle edilen harici bildirim servisi tetiklendikten sonra başarı durumuna göre "SENT" veya "FAILED" olarak güncellenmelidir.
-- Arayüz ekranlarında listelenen tüm veriler kronolojik olarak en yeni kayıt üstte görünecek şekilde sıralanmalıdır ve sayfalama (Pagination) altyapısına uygun mimaride tasarlanmalıdır.
+| Alan | Değer |
+|------|-------|
+| **Klasör** | `D:\TurkcellWorkspace\Frontend\Dönüşüm Frontend\Themis-Fe` |
+| **Framework** | **AngularJS 1.8.2** (klasik, Angular 2+ DEĞİL) |
+| **Dil** | **JavaScript ES5** — TypeScript KULLANILMAZ |
+| **Build** | **Gulp 3.9.1** + npm; bağımlılıklar **Bower** üzerinden |
+| **CSS** | **SCSS** → `rocket-engine/styles/` (UX Rocket design system) |
+| **Template** | **Handlebars** (Gulp ile precompile edilir) |
+| **Mimari** | `app/themis/` → `prelegal/` | `legal/` | `core/` | `brand/` |
+| **Pattern** | MVC: controller + HTML template + route dosyası (`.route.js`) |
+| **Multi-brand** | `turkcell`, `sol`, `tfs`, `dbs`, `tsatis` — `gulp run --brand <name>` |
+| **Design system** | `rocket-engine/` — UX Rocket (kendi icon font + SCSS değişkenleri) |
+| **Dev server** | Browser-sync (localhost:5000 proxy) |
+
+**Zorunlu Kurallar — Themis-Fe:**
+- ES6+ syntax KULLANILMAZ (`const`, `let`, `class`, arrow function, import/export yasak)
+- TypeScript EKLENMEZ
+- Bower bağımlılığı EKLENMEZ (yeni external lib yasak)
+- Angular Material, Bootstrap gibi external UI lib yasak
+- Yeni controller `app/themis/<modül>/controller/` altına, template `<modül>/template/` altına
+- Route tanımı ilgili `.route.js` dosyasına eklenir
+- Brand override: `app/themis/brand/template/<brand>/` altında brand-specific HTML override
+
 ---
 
-## Yapılmayacaklar
+### Proje 2 — Themis-TCELL (Java Backend — Ana Çekirdek)
 
-- Gerçek bir e-posta veya SMS gönderim entegrasyonu (SMTP, Twilio vb.) yapılmayacak, bu süreçler notification servis içerisinde log basılarak simüle edilecektir.
+| Alan | Değer |
+|------|-------|
+| **Klasör** | `D:\TurkcellWorkspace\Backend\ThemisProjects\Themis-TCELL` |
+| **Dil** | **Java 1.7** |
+| **Build** | **Maven** multi-module — 83 pom.xml modülü |
+| **Framework** | **Spring 4.2.3.RELEASE** (XML IoC — annotation-based config KULLANILMAZ) |
+| **Security** | Spring Security 4.0.3.RELEASE |
+| **ORM** | **Hibernate 4.3.9.Final** |
+| **Config** | `applicationContext-dao.xml`, `applicationContext-service.xml`, `applicationContext-security.xml`, `applicationContext-servlet.xml` |
+| **Group ID** | `com.turkcelltech.themis` |
+| **Deployment** | WAR → `Themis-Backend/` (REST/UI) + `Themis-Batch/` (batch jobs) |
+| **Mimari** | `core/` (Domain→Utils→Core→Prelegal/Financial/Legal→Api→Engine) → `telco/` overlay → `tcell/`, `sol/`, `dbs/`, `tfs/`, `tsatis/`, `group/`, `banking/` brand modülleri |
 
-- Çoklu dil desteği (i18n) uygulanmayacak, tüm arayüz ve hata mesajları Türkçe dilinde sabit olacaktır.
+**Zorunlu Kurallar — Themis-TCELL:**
+- Spring Boot KULLANILMAZ; `@SpringBootApplication` EKLENMEZ
+- Java 8+ feature KULLANILMAZ (`stream`, `lambda`, `Optional` yasak)
+- Bean tanımları **XML** `applicationContext-*.xml` dosyasında yapılır
+- `@Component`, `@Service`, `@Repository` annotation'ları KULLANILMAZ — XML bean tanımı zorunlu
+- Yeni sınıf: mevcut katmanın paket yapısına göre doğru modüle eklenir
+- Brand-specific kod: ilgili brand modülüne (`tcell/`, `sol/` vb.) eklenir
+- Shared kod: `core/` modüle; brand override: brand modülüne
+
+---
+
+### Proje 3 — TLegal (Java Backend — Yasal Takip Middleware)
+
+| Alan | Değer |
+|------|-------|
+| **Klasör** | `D:\TurkcellWorkspace\Backend\XLegal\TLegal` |
+| **Dil** | **Java 1.7** |
+| **Build** | **Maven** single-module — WAR (`finalName: TLEGAL`) |
+| **Framework** | **Spring 3.0.5.RELEASE** (XML IoC — annotation-based config KULLANILMAZ) |
+| **Security** | Spring Security 3.0.4–3.0.5 |
+| **ORM** | **Hibernate 3.5.6-Final** |
+| **Veritabanı** | **Oracle 10g** — dialect: `org.hibernate.dialect.Oracle10gDialect`, schema: `MW_TLEGAL` |
+| **Scheduling** | **Quartz 2.2.1** (`quartz.properties`) |
+| **JMS** | Spring JMS (listener context) |
+| **REST** | Spring MVC DispatcherServlet `/rest/*` — `RestController-servlet.xml` |
+| **App server** | WebLogic (`weblogic.xml`) |
+| **Group ID** | `com.turkcelltech.tlegal` |
+| **Paket yapısı** | `annotation/` | `dao/hibernate/` + `dao/integration/` | `domain/` | `enums/` | `factory/` | `filters/` | `handler/` | `jms/` | `job/` | `listeners/` | `mapper/` | `model/ws/` + `model/pojo/` | `service/impl/` + `service/dbcall/` + `service/wscall/rest/` | `utils/` | `webservice/` |
+
+**Zorunlu Kurallar — TLegal:**
+- Spring Boot KULLANILMAZ; `@SpringBootApplication` EKLENMEZ
+- Java 8+ feature KULLANILMAZ
+- Bean tanımları **XML** context dosyalarında (`applicationContext-dao/service/ui/listener/jms.xml`)
+- `@Component`, `@Service`, `@Repository` annotation'ları KULLANILMAZ
+- Oracle SQL sözdizimi kullanılır (MySQL/PostgreSQL syntax geçersiz)
+- Yeni Quartz job: `job/` paketine + `quartz.properties`'e trigger eklenir
+- Yeni webservice interface: `webservice/` altında mevcut interface pattern'ına göre
+- Yeni REST endpoint: `service/wscall/rest/` controller'ına + `RestController-servlet.xml`'e mapping
+
+---
+
+### Hangi iş hangi projeye gider?
+
+| Task prefix | Proje | Sekme |
+|-------------|-------|-------|
+| `FE-` | Themis-Fe (AngularJS) | `@kadikoy-master` |
+| `BE-TCELL-` | Themis-TCELL (Java Spring 4) | `@kadikoy-master` |
+| `BE-TLEGAL-` | TLegal (Java Spring 3) | `@kadikoy-master` |
+| `OPS-` | Docker, CI, altyapı | `@kadikoy-ops` |
+
+---
+
+## KATMAN B — AKTİF GELİŞTİRME İSTEĞİ (Siz yazarsınız)
+
+> Aşağıya her yeni özellik, bug fix veya performans isteğinizi yazın.
+> **Hangi proje** ve **tür** belirtin; detayları madde madde veya paragraf olarak yazabilirsiniz.
+> Agent bu bölümü okuyup `2-TASKS-araTasklarda*.md` dosyasına task olarak dönüştürür.
+
+---
+
+### Mevcut İstek
+
+*(Tamamlandı — yeni istek için buraya yazın)*
+
+---
+

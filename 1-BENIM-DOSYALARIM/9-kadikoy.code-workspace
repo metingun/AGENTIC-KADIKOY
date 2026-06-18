@@ -1,21 +1,42 @@
 {
   "folders": [
     {
-      "name": "ScrumAssistantFrontend",
-      "path": "ScrumAssistantFrontend"
+      "name": "KADIKOY-AGENTS (Docs & System)",
+      "path": "D:\\TurkcellWorkspace\\Skills MD\\AGENTIC-KADIKOY"
     },
     {
-      "name": "ScrumAssistantBackend",
-      "path": "ScrumAssistantBackend"
+      "name": "Themis-TCELL",
+      "path": "D:\\TurkcellWorkspace\\Backend\\ThemisProjects\\Themis-TCELL"
     },
     {
-      "name": "Docs",
-      "path": "docs"
+      "name": "TLegal",
+      "path": "D:\\TurkcellWorkspace\\Backend\\XLegal\\TLegal"
+    },
+/*    {
+      "name": "SLegal",
+      "path": "D:\\TurkcellWorkspace\\Backend\\XLegal\\SLegal"
     },
     {
-      "name": "KADIKOY-AGENTS",
-      "path": "KADIKOY-AGENTS"
+      "name": "Tsatis-Legal",
+      "path": "D:\\TurkcellWorkspace\\Backend\\XLegal\\TsatisLegal"
+    },
+    {
+      "name": "Tfs-Legal",
+      "path": "D:\\TurkcellWorkspace\\Backend\\XLegal\\TfsLegal"
+    },
+    {
+      "name": "Dbs-Legal",
+      "path": "D:\\TurkcellWorkspace\\Backend\\XLegal\\DbsLegal"
+    },*/
+    {
+      "name": "Themis-Fe",
+      "path": "D:\\TurkcellWorkspace\\Frontend\\Dönüşüm Frontend\\Themis-Fe"
+    },
+    {
+      "name": "aiskills (Skills MD)",
+      "path": "D:\\TurkcellWorkspace\\Skills MD\\aiskills"
     }
+    
   ],
   "settings": {
     "chat.useAgentsMdFile": true,
@@ -23,20 +44,20 @@
     "chat.includeApplyingInstructions": true,
     "chat.includeReferencedInstructions": true,
     "files.exclude": {
-      "**/node_modules": true,
       "**/target": true,
+      "**/node_modules": true,
       "**/.angular": true,
-      "**/dist": true
-    }
+      "**/dist": true,
+      "**/.idea": true
+    },
+    "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx8G -Xms100m -Xlog:disable"
   },
   "extensions": {
     "recommendations": [
-      "github.copilot",
-      "github.copilot-chat",
-      "angular.ng-template",
       "vscjava.vscode-java-pack",
-      "ms-azuretools.vscode-docker",
-      "redhat.vscode-yaml"
+      "redhat.vscode-xml",
+      "redhat.vscode-yaml",
+      "ms-azuretools.vscode-docker"
     ]
   }
 }

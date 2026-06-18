@@ -1,7 +1,7 @@
 # KADIKOY Agent Routing — Otomatik Yönlendirme Matrisi
 
 > **Otorite:** `@kadikoy-agents-orchestrator` pipeline'ı yönetir; Master/Ops yalnızca protokolü uygular.
-> **State:** `@docs/4-HANDOFF-agentYazar.md` → `## Orchestrator State` (adım geçişi buradan doğrulanır)
+> **State:** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/4-HANDOFF-agentYazar.md` → `## Orchestrator State` (adım geçişi buradan doğrulanır)
 > Kullanıcı agent adı **belirtmez**; Orchestrator task tipine göre `agents/` altındaki 20 uzmanı sırayla devreye sokar.
 
 ---
@@ -17,14 +17,20 @@
 
 ## Task sınıflandırma (otomatik)
 
-| Önek / sinyal | Tip | Ana kanal |
-|---------------|-----|-----------|
-| `FE-` | Frontend | Master |
-| `BE-` | Backend | Master |
-| `OPS-` | Altyapı | Ops |
-| UI, ekran, component, sayfa, form, Angular | Frontend | Master |
-| API, endpoint, servis, entity, Kafka, DB | Backend | Master |
-| docker, nginx, CI, deploy, migration infra | Ops | Ops |
+| Önek / sinyal | Tip | Proje | Ana kanal |
+|---------------|-----|-------|-----------|
+| `FE-` | Frontend | Themis-Fe (AngularJS 1.8 / ES5 / Gulp) | Master |
+| `BE-TCELL-` | Backend | Themis-TCELL (Java 7 / Spring 4.2 XML / Hibernate 4 / Maven multi-module) | Master |
+| `BE-TLEGAL-` | Backend | TLegal (Java 7 / Spring 3.0 XML / Hibernate 3.5 / Oracle 10g) | Master |
+| `BE-` | Backend (proje belirsiz — BUSINESS KATMAN A'dan çıkar) | Master |
+| `OPS-` | Altyapı | Docker, CI/CD, nginx | Ops |
+| UI, ekran, component, sayfa, form, AngularJS | Frontend | Themis-Fe | Master |
+| servis, entity, DB, Oracle, Quartz, JMS | Backend | BUSINESS KATMAN A'dan belirle | Master |
+| docker, nginx, CI, deploy, migration infra | Ops | — | Ops |
+
+> **Proje bağlamı:** `BE-TCELL-` veya `BE-TLEGAL-` prefix'i yoksa Backend Architect,
+> `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/1-BUSINESS-anaBusinessLogicte*.md` →
+> **KATMAN A — PROJE KATALOĞU** bölümünü okuyarak hedef projeyi ve stack kısıtlarını belirler.
 
 ---
 
@@ -32,9 +38,18 @@
 
 Kullanıcı ne derse desin, **FE-** veya UI içeren her task bu sırayı izler.
 
-> **Zorunlu tema:** `@KADIKOY-AGENTS/1-BENIM-DOSYALARIM/PANCAKE-DASHBOARD-THEME.md` + `@kadikoy-pancake-theme` — tüm HTML/CSS/UI bu temaya göre. Override yalnızca kullanıcı açıkça isterse.
+> **⚠️ LEGACY JS KURAL HATIRLATMASI (Themis-Fe için zorunlu):**
+> Frontend Developer adımında, kod yazmadan önce `1-BUSINESS` → **KATMAN A** okunur.
+> - **AngularJS 1.8** (klasik MVC) — Angular 2+ / React / Vue KULLANILMAZ
+> - **JavaScript ES5** — `const`, `let`, `class`, arrow function, `import/export`, TypeScript YASAK
+> - Bower bağımlılığı / yeni external kütüphane EKLENMEZ
+> - Controller: `app/themis/<modül>/controller/`, Template: `<modül>/template/`, Route: `.route.js`
+> - CSS: UX Rocket SCSS değişkenleri (`rocket-engine/styles/`) kullanılır
+> - Brand override: `app/themis/brand/template/<brand>/` klasörüne
 
-> **Forma estetik DNA** (`ux-developer.md` birleştirildi): UI Designer = vizyon, UX Architect = mimari brief, Frontend Developer = kod. Generic "AI slop" yasak.
+> **Tema:** Themis-Fe kendi UX Rocket design system'ini kullanır. Pancake Dashboard teması yalnızca sıfırdan yeni projeler içindir — Themis-Fe için UX Rocket tokenları geçerlidir.
+
+> **Forma estetik DNA:** UI Designer = vizyon, UX Architect = mimari brief, Frontend Developer = kod. Generic "AI slop" yasak.
 
 | Adım | Agent | Görev | Atlama |
 |:---:|-------|-------|--------|
@@ -54,15 +69,23 @@ Kullanıcı ne derse desin, **FE-** veya UI içeren her task bu sırayı izler.
 
 ## Master — BE- task pipeline (sıra zorunlu)
 
+> **⚠️ LEGACY JAVA KURAL HATIRLATMASI (BE-TCELL- ve BE-TLEGAL- için zorunlu):**
+> Backend Architect adımında, kod yazmadan önce `1-BUSINESS` → **KATMAN A** okunur.
+> - Spring Boot / `@SpringBootApplication` / `@Component` / `@Service` / `@Repository` KULLANILMAZ
+> - Java 8+ özelliği (stream, lambda, Optional, var, record) KULLANILMAZ
+> - Bean tanımları `applicationContext-*.xml` (Spring XML IoC) ile yapılır
+> - BE-TCELL-: Maven multi-module; yeni sınıf doğru modüle (core / telco / brand) eklenir
+> - BE-TLEGAL-: Oracle SQL sözdizimi; Quartz job için `quartz.properties` + XML context güncellenir
+
 | Adım | Agent | Görev | Atlama |
 |:---:|-------|-------|--------|
-| 0 | Prompt Engineer + Optimization Architect | Task brief hazırla | Asla |
+| 0 | Prompt Engineer + Optimization Architect | Task brief hazırla; **1-BUSINESS KATMAN A oku** → hedef proje + stack kısıtları | Asla |
 | 1 | **Product Manager** | Gereksinim belirsiz veya yeni domain kuralı varsa netleştirir | Net gereksinimde atla |
-| 2 | **Software Architect** | Yeni modül, servis sınırı, ADR, monolit/mikroservis kararı | Küçük bugfix'te atla |
-| 3 | **Backend Architect** | API, servis, domain kodu | Asla |
-| 4 | **Database Optimizer** | Şema, migration, index, sorgu | DB yoksa atla |
-| 5 | **Data Engineer** | Kafka, event, ETL, stream pipeline | Mesajlaşma yoksa atla |
-| 6 | **Code Reviewer** | İnceleme | Asla |
+| 2 | **Software Architect** | Yeni modül, servis sınırı, ADR; monolit katman kararı (microservice öneremez) | Küçük bugfix'te atla |
+| 3 | **Backend Architect** | Hedef projenin XML IoC + Java 7 kurallarına uygun API / servis / domain kodu | Asla |
+| 4 | **Database Optimizer** | Şema, migration, index, sorgu (Oracle için Oracle syntax zorunlu) | DB yoksa atla |
+| 5 | **Data Engineer** | JMS / Kafka event pipeline (sadece TLegal JMS veya mevcut Kafka varsa) | Mesajlaşma yoksa atla |
+| 6 | **Code Reviewer** | İnceleme — Java 7 uyumu + XML config eksiği + Spring Boot kaçağı kontrol | Asla |
 | 7 | **Minimal Change Engineer** | Düzeltme | FAIL varsa |
 | 8 | **API Tester** | Endpoint, contract, performans testi | Asla |
 | 9 | **Senior SecOps Engineer** | Secret taraması + auth değişikliği onayı | Her submission'da tarama |
