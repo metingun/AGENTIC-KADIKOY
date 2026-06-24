@@ -118,7 +118,12 @@
 ---
 
 ### Mevcut İstek
+- Aşağıdaki tüm maddeler, interOfficeInfoFlow ekranı ile ilgili backend ve frontend bugfix (hata giderme) ve feature (yeni özellik) taleplerini içermektedir.
 
+- listPreLegal rest request yerine /listByUserType request kullan ve oradan userType ile istek at.
+- interOfficeInfoFlow ekranında hukuk bürosu kolonu ve değerlerinde hukuk bürosu ID si geliyor adının gelmesi için gerekli geliştirme veya kontrolleri gerçekleştir.
+
+- Bunlar sonucunda test kodlarını da gerekli noktalarda düzelt.                
 *(Tamamlandı — yeni istek için buraya yazın)*
 
 ---

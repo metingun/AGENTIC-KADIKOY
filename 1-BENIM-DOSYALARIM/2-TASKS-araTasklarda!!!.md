@@ -13,16 +13,24 @@
 
 ## Yapılacaklar (üstten alta)
 
+- [x] BE-TCELL-001: Hukuk bürosu popup filtresi — sadece PRELEGAL_STATUS=1 olan bürolar getirilmeli
+- [x] BE-TCELL-002: Talepler listesi sorgusu — sadece prelegal statüsü aktif olanlar listelenmeli
+- [x] BE-TCELL-003: Subject (konu) alanı max 300 karakter backend validasyonu
+- [x] BE-TCELL-004 (kısmi): Expire Days max 30 gün üst sınırı validasyonu eklendi; süresi dolunca otomatik iptal + mail batch job ayrı task olarak açıldı
+- [x] BE-TCELL-005: Subject arama case-insensitive — FE'de zaten `toLocaleLowerCase('tr-TR')` kullanılıyor, ek değişiklik gerekmedi
+- [x] BE-TCELL-006: Prelegal kullanıcı response fix — `getMailToList` NPE giderildi, `lawOfficeName` null-safe yapıldı
+- [x] BE-TCELL-007: İptal aksiyonunda ana statü güncellenmesi — BE-TCELL-006 fix'iyle çözüldü (createRequest artık SUCCESS döner → updateRequest çağrılır)
+- [x] BE-TCELL-008: Unit test güncellemeleri — mevcut non-central mock'lar güncellendi, yeni validasyon testleri eklendi
+- [x] FE-001: "Yeni Talep Oluştur" butonu sadece Merkez rolünde — zaten `ng-show="... && central"` ile implement edilmişti
+- [x] FE-002: Subject (konu) alanı max 300 karakter frontend validasyonu eklendi
+- [x] BE-TCELL-009: Expire Days süresi dolunca otomatik "İptal Edildi" + Merkez kullanıcılara mail — `listRequests` içinde `expireOverdueRequests` + `createMailLog("Expire")` ile implement edildi
+
+- [x] FE-003: `loadLawOffices` endpoint değişikliği — `listPrelegal` → `listByUserType`, response key `prelegalLawOffices` → `lawOffices`; listede ID yerine isim görünmesi sağlandı
+
 ---
 
 ## Bitti
-- [x] BE-TCELL-002: CommunicationService.tlegalInkaWebServiceCall → @Autowired(required=false) + null guard in enrichScreenListWithSuperboxFlag; diğer brandlar için no-op davranış sağlandı
-- [x] FE-002: customer-card.html {{customerCardTitle || 'Müşteri Kartı'}} fallback doğrulandı — diğer brandlar için güvenli
-- [x] BE-TEST: TLegal ve Themis-TCELL yeni sınıfları için unit testler yazıldı + sonar bulguları düzeltildi
-- [x] BE-TLEGAL-001: TLegalInkaController + InkaProductQueryClient oluştur — PRODUCT_QUERY_SERVICE_WS (SOAP) üzerinden getProductDetailWithCustomerByMsisdn metodunu çağır; paymentType=76 ise superbox abonesi; request/response model'leri oluştur; Constants'a PRODUCT_QUERY_SERVICE_WS ve PRODUCT_QUERY_SERVICE_WS_TIMEOUT ekle
-- [x] BE-TCELL-001: CommunicationService.getEplInvoices (Themis-TCELL core) — isInCallList=1 olan unique msisdn'ler için TLegal InkaController'a REST isteği at; isSuperboxCustomer flag'ini EplInvoiceScreenDto'ya ekle; transaction yönetimini bozmadan yalnızca TCELL projesinde devreye gir
-- [x] FE-001: Themis-Fe turkcell brand customer_card_faturalar.html — Contract Statü ile Arama Listesinde kolonları arasına Superbox Abonesi kolonu ekle (ng-if="brand=='turkcell'"); isSuperboxCustomer=1 ise faturalar içinde herhangi biri varsa popup göster; customer-card.html'de Müşteri Kartı başlığını Müşteri Kartı (Superbox Abonesi) yap (ng-if="brand=='turkcell' && hasSuperboxCustomer")
-- [x] BE-TLEGAL-002: InkaProductQueryClient baştan yaz — productQuery JAR JAX-WS stublarını kullan (ProductQuery_Service/ProductQuery port); CustomerRelationWebServiceImpl pattern ile port lifecycle yönetimi; SecureWebService/SecureWsUtil ApiGW entegrasyonu; manuel HTTP/XML parsing kaldırıldı
+
 *(Önceki Scrum Assistant sprint task'ları 8-CHANGELOG'da kayıtlı)*
 
 ---

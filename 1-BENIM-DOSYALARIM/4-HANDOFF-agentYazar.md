@@ -8,9 +8,9 @@
 ```yaml
 channel: MASTER
 pipeline: done
-task: "BE-TLEGAL-002"
-step_current: 4
-step_total: 4
+task: "BE-TCELL-001 ~ BE-TCELL-009 + FE-001 ~ FE-003"
+step_current: 9
+step_total: 9
 retry: 0
 qa_status: pass
 proje_basi_done: true
@@ -19,39 +19,47 @@ blocked: false
 blocked_reason: ""
 ```
 
-**Son güncelleme:** 2026-06-15
-**Durum:** BE-TLEGAL-002 tamamlandı — yeni istek bekleniyor
+**Son güncelleme:** 2026-06-23
+**Durum:** Tüm interOfficeInfoFlow BE+FE task'lari tamamlandi (BE-TCELL-001~009 + FE-001~003)
 
 ---
 
-## Son yapılan (Master — FE/BE)
+## Son yapilan (Master — FE/BE)
 
-- **BE-TLEGAL-002**: `InkaProductQueryClient` baştan yeniden yazıldı — `productQuery` JAR'ın JAX-WS stubları (`ProductQuery_Service`, `ProductQuery` port, `getProductDetailWithCustomerByMsisdn`) kullanılarak `CustomerRelationWebServiceImpl` patternine uygun hale getirildi; `SecureWebService.getUrl()`, `SecureWsUtil.secureWs()`, ApiGW token header entegrasyonu eklendi; manuel `HttpURLConnection`/`BufferedReader`/`DocumentBuilderFactory` kaldırıldı.
-- Dosyalar:
-  - `D:\TurkcellWorkspace\Backend\XLegal\TLegal\src\main\java\com\turkcelltech\tlegal\service\wscall\rest\InkaProductQueryClient.java` (REWRITE)
-  - `D:\TurkcellWorkspace\Skills MD\AGENTIC-KADIKOY\1-BENIM-DOSYALARIM\2-TASKS-araTasklarda!!!.md` (BE-TLEGAL-002 eklendi ✓)
+### interOfficeInfoFlow — BE+FE Fix Batch (2026-06-23)
 
-## Son yapılan (Ops)
+**Root cause:** `InterOfficeInfoFlowServiceImpl.getMailToList()` non-central user icin `request.setLawOfficeName()` hic cagrilmiyordu → `createMailLog()` icinde NPE → tum Prelegal kullanici islemleri hata veriyordu.
 
-- Cümle: —
+**Degisen dosyalar:**
+
+| Dosya | Degisiklik |
+|-------|-----------|
+| `Themis-Core/.../InterOfficeInfoFlowServiceImpl.java` | `getMailToList` non-central fix, `createMailLog` null-safe + "Expire" bloku, subject max 300, expireDays max 30, `expireOverdueRequests` private metod |
+| `Themis-Legal/.../LawOfficeInfoFlowDaoImpl.java` | `getAllParentsByStatusBase` SQL → `INNER JOIN LAW_OFFICE` + `PRELEGAL_STATUS = 1` filtresi |
+| `Themis-Core/.../InterOfficeInfoFlowServiceImplTest.java` | Non-central mock'lar guncellendi, yeni validasyon testleri + 3 expiry senaryosu eklendi |
+| `Themis-Fe/.../interOfficeInfoFlow.controller.js` | `loadLawOffices` → `/listByUserType` endpoint, response key `lawOffices` (FE-001 + FE-003) |
+| `Themis-Fe/.../interOfficeInfoFlowCreate.html` | Subject input `maxlength="300"` + `ng-maxlength` validasyon mesaji |
+
+**Cozulen sorunlar:** BE-TCELL-001/002/003/004/005/006/007/008/009 + FE-001/FE-002/FE-003
+
+## Son yapilan (Ops)
+
+- Cumle: —
 - Dosyalar: —
 
-## Sıradaki
+## Siradaki
 
-- `1-BUSINESS-anaBusinessLogicte*.md` → KATMAN B bölümüne geliştirme isteğinizi yazın
-- `2-TASKS-araTasklarda*.md` → Task satırları ekleyin (FE- / BE-TCELL- / BE-TLEGAL- / OPS-)
-- `@kadikoy-master` → `devam` yazın
+- `1-BUSINESS-anaBusinessLogicte*.md` → KATMAN B bolumune gelistirme isteginizi yazin
+- `2-TASKS-araTasklarda*.md` → Task satirlari ekleyin (FE- / BE-TCELL- / BE-TLEGAL- / OPS-)
+- `@kadikoy-master` → `devam` yazin
 
-## Test / kanıt
+## Test / kanit
 
-- `ProductQuery_Service`, `ProductQuery` port, `GetProductDetailWithCustomerByMsisdnRequest/Response` — `javap` ile doğrulandı (namespace: `http://extranet.turkcell.com/enablers/internals/productquery/ProductQuery_v1.0`, service name: `ProductQuery`, port method: `getProductQuerySOAP()`)
-- `SecureWsUtil.secureWs(BindingProvider, MethodCallType)` imzası mevcut (line 29)
-- `Util.isNullOrEmptyArray` mevcut (line 65)
 
 ## Risk / not
 
-- Projeler farklı klasörlerde; workspace `9-kadikoy.code-workspace` dosyası ile Cursor'da açılmalı
-- Themis-TCELL: Java 7 + Spring 4 XML IoC (Spring Boot değil)
+- Projeler farkli klasorlerde; workspace `9-kadikoy.code-workspace` dosyasi ile Cursor'da acilmali
+- Themis-TCELL: Java 7 + Spring 4 XML IoC (Spring Boot degil)
 - TLegal: Java 7 + Spring 3 XML IoC + Oracle 10g dialect
-- Themis-Fe: AngularJS 1.8 + ES5 (TypeScript / ES6+ kullanılmaz)
-- `PRODUCT_QUERY_SERVICE_WS` Constants'ta tanımlı; `MethodCallType.BACKEND` kullanılıyor (ApiGW üzerinden backend çağrısı)
+- Themis-Fe: AngularJS 1.8 + ES5 (TypeScript / ES6+ kullanilmaz)
+- `PRODUCT_QUERY_SERVICE_WS` Constants'ta tanimli; `MethodCallType.BACKEND` kullaniliyor (ApiGW uzerinden backend cagrisi)
